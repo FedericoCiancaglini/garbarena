@@ -4,13 +4,22 @@ import {SellableRepository} from "../repositories/SellableRepository";
 import {Sellable as SellableInterface} from "../interfaces/Sellable";
 import {Combo} from "./Combo";
 import {Product} from "./Product";
+import {StorageLocation as StorageLocationInterface} from "../../stock/interfaces/StorageLocation";
+import {StorageController} from "../../stock/implementations/StorageController";
+import {SaleController as SaleControllerInterface} from "../../sales/interfaces/SaleController";
+import {SaleController} from "../../sales/implementations/SaleController";
+import {Client} from "../../client/interfaces/Client";
 
 export class SellableController implements SellableControllerInterface {
     
     private repository: SellableRepository;
+    private storageController: StorageController;
+    private saleController: SaleControllerInterface;
 
     constructor() {
         this.repository = SellableRepository.getInstance();
+        this.storageController = new StorageController();
+        this.saleController = new SaleController();
     }
     
     addSellable = (req: Request, res: Response) => {
@@ -47,6 +56,28 @@ export class SellableController implements SellableControllerInterface {
     };
 
     buySellable = (req: Request, res: Response) => {
+        const params = req.body;
+        const amount: number = params.amount;
+        const storage: StorageLocationInterface = params.storage;
+        const sellable: SellableInterface = params.sellable;
+        this.storageController.checkStock(storage, sellable, amount,
+            (hasStock) => {
+                if (hasStock) {
+                    const creditCardNumber: string = params.creditCardNumber;
+                    const price: number = params.price;
+                    const client: Client = params.client;
+                    this.saleController.startTransaction(creditCardNumber, price, sellable, storage, client, (success: boolean) => {
+                        res.send({
+                            status: 200,
+                            message: "Sale successful"
+                        });
+                        // Todo: Que se borre el sellable del storage.
+                        }, error => res.status(400).send({status: 400, message: error}))
+
+                } else {
+                    return res.status(400).send({status: 400, message: 'No stock on storage'})
+                }
+            });
     };
 
     getReccomendationsForSellable = (req: Request, res: Response) => {

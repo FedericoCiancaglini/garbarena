@@ -28,4 +28,8 @@ export class StorageLocation implements StorageLocationInterface {
         this.sellables.delete(sellable)
     }
 
+    getSellableAmount(sellable: SellableInterface): number {
+        return this.sellables.get(sellable);
+    }
+
 }

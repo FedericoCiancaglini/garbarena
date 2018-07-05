@@ -3,6 +3,7 @@ import {StorageController as StorageControllerInterface} from "../interfaces/Sto
 import {StorageRepository} from "../repositories/StorageRepository";
 import {StorageLocation as StorageLocationInterface} from "../interfaces/StorageLocation";
 import {StorageLocation} from "./StorageLocation";
+import {Sellable as SellableInterface} from "../../sellable/interfaces/Sellable";
 
 export class StorageController implements StorageControllerInterface {
     
@@ -11,8 +12,11 @@ export class StorageController implements StorageControllerInterface {
     constructor() {
         this.repository = StorageRepository.getInstance();
     }
-    
+
     addSellableToStorage = (req: Request, res: Response) => {
+    };
+
+    addStorage = (req: Request, res: Response) => {
         const storage: StorageLocationInterface = this.buildStorageFromBody(req, res);
         this.repository.addStorage(storage, (err, createdStorage) => {
             if (err) {
@@ -28,6 +32,12 @@ export class StorageController implements StorageControllerInterface {
             }
         }, (errorMessage) => res.status(400).send({status: 400, error: errorMessage}))
     };
+
+    checkStock(storage: StorageLocationInterface, sellable: SellableInterface, amount: number, callback: (hasStock: boolean) => any): void {
+        const amountAvailable: number = storage.getSellableAmount(sellable);
+        if (amountAvailable > amount) callback(true);
+        else callback(false);
+    }
 
     getAllSellablesByStorage = (req: Request, res: Response) => {
     };

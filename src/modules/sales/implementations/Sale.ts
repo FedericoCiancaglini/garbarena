@@ -5,12 +5,12 @@ import {Sellable as SellableInterface} from "../../sellable/interfaces/Sellable"
 export class Sale implements SaleInterface {
 
     date: Date;
-    sellables: SellableInterface[];
+    sellable: SellableInterface;
     client: ClientInterface;
 
-    constructor(sale: Sale) {
+    constructor(sale: any) {
         this.date = sale.date;
-        this.sellables = sale.sellables;
+        this.sellable = sale.sellable;
         this.client = sale.client;
     }
 
@@ -22,8 +22,8 @@ export class Sale implements SaleInterface {
         return this.date;
     }
 
-    getSellables(): SellableInterface[] {
-        return this.sellables;
+    getSellable(): SellableInterface {
+        return this.sellable;
     }
 
 }

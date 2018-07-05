@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import {Response} from "express";
 
-export class SaleRepository {
+export class CategoryRepository {
 
 }
 

@@ -1,10 +1,12 @@
 import {PersonController} from "./modules/person/implementations/PersonController";
 import {SellableController} from "./modules/sellable/implementations/SellableController";
 import {ClientController} from "./modules/client/implementations/ClientController";
+import {StorageController} from "./modules/stock/implementations/StorageController";
 
 const router = require('express').Router();
 const personController = new PersonController();
 const clientController = new ClientController();
+const storageController = new StorageController()
 const sellableController = new SellableController();
 
 // Person
@@ -15,6 +17,9 @@ router.put('/api/person/update', personController.updatePerson);
 
 // Client
 router.post('/api/client/add', clientController.addClient);
+
+// Storage
+router.post('/api/storage/add', storageController.addStorage);
 
 // Sellable
 router.post('/api/sellable/add', sellableController.addSellable);

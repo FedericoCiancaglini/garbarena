@@ -3,6 +3,6 @@ import {Client as ClientInterface} from "../../client/interfaces/Client";
 
 export interface Sale {
     getDate(): Date
-    getSellables(): SellableInterface[]
+    getSellable(): SellableInterface
     getClient(): ClientInterface
 }

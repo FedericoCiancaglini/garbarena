@@ -6,4 +6,6 @@ export interface StorageLocation {
     getSellables(): Map<SellableInterface, number>
     addSellable(sellable: SellableInterface, amount: number): void
     removeSellable(sellable: SellableInterface): void
+
+    getSellableAmount(sellable: SellableInterface): number;
 }

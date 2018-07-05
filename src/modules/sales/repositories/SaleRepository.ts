@@ -18,15 +18,15 @@ export class SaleRepository {
         return this._instance;
     }
 
-    public addSale(sale: SaleInterface, callback: (error: any, response: any) => Response|void, error?: (message: string) => Response) {
-        this.getSaleInstance(sale).then(saleDocument => saleDocument.save(callback));
+    public addSale(sale: SaleInterface) {
+        this.getSaleInstance(sale).then(saleDocument => saleDocument.save());
     }
 
     private getSaleInstance(sale: SaleInterface): Promise<any> {
         return new Promise((((resolve, reject) => {
             resolve(new SaleSchema({
                 date: sale.getDate(),
-                sellables: sale.getSellables(),
+                sellable: sale.getSellable(),
                 client: sale.getClient()
             }))
         })))
@@ -36,7 +36,7 @@ export class SaleRepository {
 
 export const saleSchema = new mongoose.Schema({
     date: {type: Date, required: true},
-    sellables: {type: [sellableSchema], required: true},
+    sellable: {type: sellableSchema, required: true},
     client: {type: clientSchema, required: true}
 });
 
