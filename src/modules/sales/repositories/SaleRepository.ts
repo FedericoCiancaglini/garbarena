@@ -3,6 +3,7 @@ import {Response} from "express";
 import {clientSchema} from "../../client/repositories/ClientRepository";
 import {sellableSchema} from "../../sellable/repositories/SellableRepository";
 import {Sale as SaleInterface} from "../interfaces/Sale";
+import {Sale} from "../implementations/Sale";
 
 export class SaleRepository {
 
@@ -23,6 +24,11 @@ export class SaleRepository {
     }
 
     private getSaleInstance(sale: SaleInterface): Promise<any> {
+        console.log("INSIDE GET SALE INSTANCE");
+        console.log(sale instanceof Sale);
+        console.log(sale.getDate());
+        console.log(sale.getSellable());
+        console.log(sale.getClient());
         return new Promise((((resolve, reject) => {
             resolve(new SaleSchema({
                 date: sale.getDate(),

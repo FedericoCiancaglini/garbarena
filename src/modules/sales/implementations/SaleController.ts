@@ -15,7 +15,7 @@ export class SaleController implements SaleControllerInterface {
 
     startTransaction(creditCardNumber: string, price: number, sellable: SellableInterface, storage: StorageLocationInterface, client: ClientInterface, onSuccess?: (response: any) => void, onError?: (error: any) => void): void {
         if (creditCardNumber.length === 16) {
-            this.repository.addSale(new Sale({date: new Date(), sellables: sellable, client: client}))
+            this.repository.addSale(new Sale({date: new Date(), sellable: sellable, client: client}))
         }
     }
 

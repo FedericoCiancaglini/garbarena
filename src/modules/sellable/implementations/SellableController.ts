@@ -60,7 +60,17 @@ export class SellableController implements SellableControllerInterface {
         const amount: number = params.amount;
         const storage: StorageLocationInterface = params.storage;
         const sellable: SellableInterface = params.sellable;
-        this.storageController.checkStock(storage, sellable, amount,
+        const creditCardNumber: string = params.creditCardNumber;
+        const price: number = params.price;
+        const client: Client = params.client;
+        this.saleController.startTransaction(creditCardNumber, price, sellable, storage, client, (success: boolean) => {
+            res.send({
+                status: 200,
+                message: "Sale successful"
+            });
+            // Todo: Que se borre el sellable del storage.
+        }, error => res.status(400).send({status: 400, message: error}))
+        /*this.storageController.checkStock(storage, sellable, amount,
             (hasStock) => {
                 if (hasStock) {
                     const creditCardNumber: string = params.creditCardNumber;
@@ -77,7 +87,7 @@ export class SellableController implements SellableControllerInterface {
                 } else {
                     return res.status(400).send({status: 400, message: 'No stock on storage'})
                 }
-            });
+            });*/
     };
 
     getReccomendationsForSellable = (req: Request, res: Response) => {
