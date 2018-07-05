@@ -4,6 +4,10 @@ import {Type as TypeInterface} from "../interfaces/Type";
 export class Type implements TypeInterface {
     value: string;
 
+    constructor(type: any) {
+        this.value = type.value;
+    }
+
     getValue(): string {
         return this.value;
     }

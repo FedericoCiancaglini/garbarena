@@ -1,5 +1,4 @@
 import {Request, Response} from "express";
-import {Person} from "./Person";
 
 export interface PersonController {
     addPerson(req: Request, res: Response): void

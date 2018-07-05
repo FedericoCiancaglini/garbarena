@@ -2,6 +2,7 @@ import {Request, Response} from "express";
 import {ClientController as ClientControllerInterface} from "../interfaces/ClientController";
 import {ClientRepository} from "../repositories/ClientRepository";
 import {Client as ClientInterface} from "../interfaces/Client";
+import {Client} from "./Client";
 
 export class ClientController implements ClientControllerInterface {
 
@@ -41,4 +42,8 @@ export class ClientController implements ClientControllerInterface {
 
     updateClient = (req: Request, res: Response) => {
     };
+
+    private buildClientFromBody(req: Request, res: Response): ClientInterface {
+        return new Client(req.body);
+    }
 }

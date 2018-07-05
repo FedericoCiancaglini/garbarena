@@ -55,7 +55,7 @@ export class PersonRepository {
     }
 }
 
-const personSchema = new mongoose.Schema({
+export const personSchema = new mongoose.Schema({
     address: {type: addressSchema, required: true},
     name: {type: String, required: true},
     lastName: {type: String, required: true},

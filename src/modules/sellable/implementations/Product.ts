@@ -7,7 +7,19 @@ export class Product implements Sellable {
     description: string;
     name: string;
     price: number;
-    type: Type
+    type: Type;
+
+    constructor(product: Product) {
+        this.category = product.category;
+        this.description= product.description;
+        this.name = product.name;
+        this.price = product.price;
+        this.type = product.type;
+    }
+
+    equals(product: Product): boolean {
+        return this.name === product.name;
+    }
 
     getCategory(): Category {
         return this.category;
@@ -23,6 +35,10 @@ export class Product implements Sellable {
 
     getPrice(): number {
         return this.price;
+    }
+
+    getType(): Type{
+        return this.type;
     }
 
 }
