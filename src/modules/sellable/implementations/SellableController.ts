@@ -46,6 +46,9 @@ export class SellableController implements SellableControllerInterface {
         })
     };
 
+    buySellable = (req: Request, res: Response) => {
+    };
+
     getReccomendationsForSellable = (req: Request, res: Response) => {
     };
 
@@ -53,6 +56,24 @@ export class SellableController implements SellableControllerInterface {
     };
 
     getSellableByName = (req: Request, res: Response) => {
+        this.repository.getSellableByName(req.params.name, (error, sellable) => {
+            if (error) {
+                return res.status(500).send({
+                    status: 500,
+                    error: error.message
+                })
+            } else if (!sellable) {
+                return res.status(404).send({
+                    status: 404,
+                    error: "Sellable with given name does not exist"
+                })
+            } else {
+                return res.send({
+                    status: 200,
+                    sellable: sellable
+                });
+            }
+        })
     };
 
     removeSellable = (req: Request, res: Response) => {

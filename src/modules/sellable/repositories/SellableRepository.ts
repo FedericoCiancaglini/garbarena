@@ -5,6 +5,7 @@ import {typeSchema} from "../implementations/Type";
 import {Sellable as SellableInterface} from "../interfaces/Sellable";
 import {Combo} from "../implementations/Combo";
 import {Product} from "../implementations/Product";
+import {PersonSchema} from "../../person/repositories/PersonRepository";
 
 export class SellableRepository{
 
@@ -31,9 +32,14 @@ export class SellableRepository{
         return SellableSchema.find({}, callback);
     }
 
+    public getSellableByName(name: String, callback: (error: any, sellableFound: any) => Response) {
+        SellableSchema.find({name: name}, callback)
+    }
+
     private getSellableInstance(sellable: SellableInterface): Promise<any> {
         return new Promise(((resolve, reject) => {
             if (sellable instanceof Combo) {
+                sellable.setPrice();
                 resolve(new SellableSchema({
                     name: sellable.getName(),
                     price: sellable.getPrice(),
@@ -52,6 +58,15 @@ export class SellableRepository{
                     type: sellable.getType()
                 }))
             }
+        }))
+    }
+
+    private buildCombo(auxSellable: Combo): Promise<any> {
+        return new Promise<Combo>(((resolve, reject) => {
+            auxSellable.getProducts().forEach(product => {
+                auxSellable.addProduct(product);
+            });
+            resolve();
         }))
     }
 }

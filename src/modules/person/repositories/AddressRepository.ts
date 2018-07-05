@@ -27,4 +27,4 @@ export const addressSchema = new mongoose.Schema({
     streetNumber: {type: Number, required: true},
 });
 
-export const AddressSchema = mongoose.model("Person", addressSchema);
+export const AddressSchema = mongoose.model("Address", addressSchema);

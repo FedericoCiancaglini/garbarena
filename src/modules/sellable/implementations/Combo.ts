@@ -33,12 +33,13 @@ export class Combo implements Sellable {
         return this.products;
     }
 
-    setPrice(): void {
+    setPrice(): number {
         this.price = 0;
         this.products.forEach(product => {
             this.price += product.price;
         });
         this.price = this.price * this.discountFactor;
+        return this.price;
     }
 
     getCategory(): CategoryInterface {

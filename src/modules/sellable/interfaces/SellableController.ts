@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 
-
 export interface SellableController {
     addSellable(req: Request, res: Response): void
     getAllSellables(req: Request, res: Response): void
